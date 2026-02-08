@@ -33,6 +33,11 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	target_distance = follow_distance
 	
+	# Auto-find player if no target set
+	if not follow_target:
+		await get_tree().process_frame
+		follow_target = get_tree().get_first_node_in_group("player")
+	
 	# Setup collision ray
 	if collision_ray:
 		collision_ray.target_position = Vector3(0, 0, follow_distance)
