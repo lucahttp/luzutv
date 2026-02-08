@@ -1,0 +1,103 @@
+[gd_scene load_steps=8 format=3 uid="uid://bw1xm5y2kp4v8"]
+
+[ext_resource type="Script" path="res://scripts/player/player_controller.gd" id="1_player"]
+[ext_resource type="Script" path="res://scripts/core/state_machine.gd" id="2_statemachine"]
+[ext_resource type="Script" path="res://scripts/player/states/idle_state.gd" id="3_idle"]
+[ext_resource type="Script" path="res://scripts/player/states/walk_state.gd" id="4_walk"]
+[ext_resource type="Script" path="res://scripts/player/states/run_state.gd" id="5_run"]
+[ext_resource type="Script" path="res://scripts/player/states/jump_state.gd" id="6_jump"]
+[ext_resource type="Script" path="res://scripts/player/states/crouch_state.gd" id="7_crouch"]
+[ext_resource type="Script" path="res://scripts/player/states/punch_state.gd" id="8_punch"]
+[ext_resource type="Script" path="res://scripts/player/states/kick_state.gd" id="9_kick"]
+[ext_resource type="Script" path="res://scripts/player/states/hit_state.gd" id="10_hit"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_main"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_body"]
+radius = 0.35
+height = 1.6
+
+[sub_resource type="SphereMesh" id="SphereMesh_head"]
+radius = 0.25
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hitbox"]
+size = Vector3(1, 1, 1.5)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hurtbox"]
+radius = 0.5
+height = 1.8
+
+[node name="Luz" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_main")
+
+[node name="Model" type="Node3D" parent="."]
+
+[node name="Body" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+mesh = SubResource("CapsuleMesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 0)
+mesh = SubResource("SphereMesh_head")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Model"]
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_statemachine")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_idle")
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource("4_walk")
+
+[node name="Run" type="Node" parent="StateMachine"]
+script = ExtResource("5_run")
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("6_jump")
+
+[node name="Crouch" type="Node" parent="StateMachine"]
+script = ExtResource("7_crouch")
+
+[node name="Punch" type="Node" parent="StateMachine"]
+script = ExtResource("8_punch")
+
+[node name="Kick" type="Node" parent="StateMachine"]
+script = ExtResource("9_kick")
+
+[node name="Hit" type="Node" parent="StateMachine"]
+script = ExtResource("10_hit")
+
+[node name="HitboxPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Hitbox" type="Area3D" parent="HitboxPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitboxPivot/Hitbox"]
+shape = SubResource("BoxShape3D_hitbox")
+
+[node name="Hurtbox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+shape = SubResource("CapsuleShape3D_hurtbox")
+
+[node name="InteractionRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(0, 0, -2)
+collision_mask = 16
