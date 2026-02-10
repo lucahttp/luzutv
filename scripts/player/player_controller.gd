@@ -198,19 +198,43 @@ func _on_hurtbox_area_entered(_area: Area3D) -> void:
 	pass
 
 ## Play animation by name (uses anim_map to translate state names to FBX names)
-func play_animation(anim_name: String) -> void:
+## Set loop=true for locomotion anims (idle, walk, run)
+## Set speed to control playback speed (2.0 = double speed)
+func play_animation(anim_name: String, loop: bool = false, speed: float = 1.0) -> void:
 	if not animation_player:
 		return
 	
 	# Look up the real animation name from the map
 	var real_name: String = anim_map.get(anim_name, anim_name)
+	var found_name: String = ""
 	
 	if animation_player.has_animation(real_name):
-		if animation_player.current_animation != real_name:
-			animation_player.play(real_name)
+		found_name = real_name
 	elif animation_player.has_animation(anim_name):
-		# Fallback: try the original name directly
-		if animation_player.current_animation != anim_name:
-			animation_player.play(anim_name)
+		found_name = anim_name
 	else:
 		push_warning("Animation not found: '%s' (mapped: '%s')" % [anim_name, real_name])
+		return
+	
+	# Set loop mode on the animation resource
+	var anim: Animation = animation_player.get_animation(found_name)
+	if anim:
+		anim.loop_mode = Animation.LOOP_LINEAR if loop else Animation.LOOP_NONE
+	
+	# Set playback speed
+	animation_player.speed_scale = speed
+	
+	# Play with crossfade blend to avoid blipping
+	if animation_player.current_animation != found_name:
+		animation_player.play(found_name, 0.2)
+
+## Get the duration of an animation in seconds
+func get_animation_length(anim_name: String) -> float:
+	if not animation_player:
+		return 0.5
+	var real_name: String = anim_map.get(anim_name, anim_name)
+	if animation_player.has_animation(real_name):
+		return animation_player.get_animation(real_name).length
+	elif animation_player.has_animation(anim_name):
+		return animation_player.get_animation(anim_name).length
+	return 0.5

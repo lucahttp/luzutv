@@ -2,16 +2,18 @@
 # Player is performing a punch attack
 extends State
 
-@export var punch_duration := 0.4
-@export var combo_window := 0.2  # Time after punch to chain into kick
+@export var combo_window := 0.3 # Time before end to allow combo input
 
 var timer := 0.0
+var punch_duration := 0.0
 var can_combo := false
 
 func enter() -> void:
-	timer = punch_duration
 	can_combo = false
-	actor.play_animation("punch")
+	actor.play_animation("punch", false, 2.0) # 2x speed
+	# Timer = real length / speed
+	punch_duration = (actor as PlayerController).get_animation_length("punch") / 2.0
+	timer = punch_duration
 	(actor as PlayerController).enable_hitbox()
 
 func exit() -> void:
@@ -30,7 +32,7 @@ func physics_update(delta: float) -> void:
 		state_machine.transition_to("kick")
 		return
 	
-	# End of attack
+	# End of attack - wait for full animation
 	if timer <= 0:
 		state_machine.transition_to("idle")
 	

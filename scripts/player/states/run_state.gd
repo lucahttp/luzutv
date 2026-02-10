@@ -3,7 +3,7 @@
 extends State
 
 func enter() -> void:
-	actor.play_animation("run")
+	actor.play_animation("run", true)
 	(actor as PlayerController).set_running(true)
 
 func exit() -> void:
@@ -14,7 +14,7 @@ func physics_update(delta: float) -> void:
 	var direction := player.get_movement_direction()
 	
 	# Check for state transitions
-	if direction.length() == 0:
+	if direction.length() < 0.1:
 		state_machine.transition_to("idle")
 		return
 	

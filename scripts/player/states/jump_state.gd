@@ -6,7 +6,7 @@ var has_jumped := false
 
 func enter() -> void:
 	has_jumped = false
-	actor.play_animation("jump")
+	actor.play_animation("jump", false, 1.5) # Slightly faster
 
 func physics_update(delta: float) -> void:
 	var player: PlayerController = actor as PlayerController
@@ -18,7 +18,7 @@ func physics_update(delta: float) -> void:
 	
 	# Allow some air control
 	var direction := player.get_movement_direction()
-	player.apply_movement(direction * 0.5, delta)  # Reduced air control
+	player.apply_movement(direction * 0.5, delta) # Reduced air control
 	
 	# Transition back when landing
 	if player.is_on_floor() and has_jumped:

@@ -2,13 +2,11 @@
 # Player is performing a kick attack
 extends State
 
-@export var kick_duration := 0.5
-
 var timer := 0.0
 
 func enter() -> void:
-	timer = kick_duration
-	actor.play_animation("kick")
+	actor.play_animation("kick", false, 2.0) # 2x speed
+	timer = (actor as PlayerController).get_animation_length("kick") / 2.0
 	(actor as PlayerController).enable_hitbox()
 
 func exit() -> void:
