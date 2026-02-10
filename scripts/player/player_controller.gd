@@ -23,6 +23,26 @@ class_name PlayerController
 @export var kick_damage := 15
 @export var attack_cooldown := 0.3
 
+## Animation name mapping (state name -> Mixamo FBX animation name)
+## Update these if your FBX files have different names
+@export_group("Animations")
+@export var anim_map: Dictionary = {
+	"idle": "idle/mixamo_com",
+	"walk": "walking/mixamo_com",
+	"run": "running/mixamo_com",
+	"jump": "jump/mixamo_com",
+	"punch": "Cross Punch/mixamo_com",
+	"kick": "Roundhouse Kick/mixamo_com",
+	"crouch_idle": "idle/mixamo_com", # Fallback until crouch anim is added
+	"crouch_walk": "walking/mixamo_com", # Fallback until crouch walk anim is added
+	"hit": "idle/mixamo_com", # Fallback until hit reaction anim is added
+	"death": "idle/mixamo_com", # Fallback until death anim is added
+	"strafe_left": "left strafe walk/mixamo_com",
+	"strafe_right": "right strafe walk/mixamo_com",
+	"turn_left": "left turn/mixamo_com",
+	"turn_right": "right turn/mixamo_com",
+}
+
 ## Node references
 @onready var state_machine: StateMachine = $StateMachine
 @onready var animation_player: AnimationPlayer = $Model/AnimationPlayer
@@ -121,7 +141,7 @@ func set_crouching(value: bool) -> void:
 	# TODO: Adjust collision shape for crouching
 
 ## Take damage from an attack
-func take_damage(amount: int, attacker: Node3D = null) -> void:
+func take_damage(amount: int, _attacker: Node3D = null) -> void:
 	current_health -= amount
 	health_changed.emit(current_health, max_health)
 	
@@ -153,7 +173,7 @@ func check_interaction() -> void:
 ## Mount a bicycle
 func mount_bike(bike: Node3D) -> void:
 	is_on_bike = true
-	visible = true  # Keep visible, position controlled by bike
+	visible = true # Keep visible, position controlled by bike
 	set_physics_process(false)
 	mounted_bike.emit(bike)
 
@@ -173,11 +193,24 @@ func _on_hitbox_area_entered(area: Area3D) -> void:
 			target.take_damage(damage, self)
 
 ## Hurtbox connected - we got hit
-func _on_hurtbox_area_entered(area: Area3D) -> void:
+func _on_hurtbox_area_entered(_area: Area3D) -> void:
 	# Damage is applied by the attacker
 	pass
 
-## Play animation by name
+## Play animation by name (uses anim_map to translate state names to FBX names)
 func play_animation(anim_name: String) -> void:
-	if animation_player and animation_player.has_animation(anim_name):
-		animation_player.play(anim_name)
+	if not animation_player:
+		return
+	
+	# Look up the real animation name from the map
+	var real_name: String = anim_map.get(anim_name, anim_name)
+	
+	if animation_player.has_animation(real_name):
+		if animation_player.current_animation != real_name:
+			animation_player.play(real_name)
+	elif animation_player.has_animation(anim_name):
+		# Fallback: try the original name directly
+		if animation_player.current_animation != anim_name:
+			animation_player.play(anim_name)
+	else:
+		push_warning("Animation not found: '%s' (mapped: '%s')" % [anim_name, real_name])

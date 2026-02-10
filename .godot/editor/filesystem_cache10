@@ -1,37 +1,81 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1770523981
+::res://::1770690068
 icon.svg::CompressedTexture2D::2568758185853647726::1770523455::1770523982::1::::<><><>0<>0<>0d6815e90e595de5059613f3c15fd56c<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 PROMPT.md::TextFile::-1::1770523204::0::1::::<><><>0<>0<><>::
+::res://assets/::1770688472
+::res://assets/models/::1770688472
+::res://assets/models/characters/::1770688472
+::res://assets/models/characters/luz/::1770688741
+Cross Punch.fbx::PackedScene::6803892147243084442::1770688379::1770688740::1::::<><><>0<>0<>8a510d5fe9b0278304638426b549e8e0<>res://.godot/imported/Cross Punch.fbx-7beceea7bf29a3ed3c1d236dcbb4286a.scn::uid://csbe2cak3oac::::res://assets/models/characters/luz/Cross Punch_0.png
+Cross Punch_0.png::CompressedTexture2D::177605768252069562::1770688736::1770688741::1::::<><><>0<>0<>b5fa28fb1efbac07b7723e416b8b09df<>res://.godot/imported/Cross Punch_0.png-a42fc548f9d77c5a5039668ad98f9157.s3tc.ctex::
+idle.fbx::PackedScene::3851847476726757431::1770698988::1770688733::1::::<><><>0<>0<>f65e8cf4d10e723fb8b3218743acbfec<>res://.godot/imported/idle.fbx-c06bad1a1ff7b2577c8a2fc5c62f5fda.scn::
+jump.fbx::PackedScene::8120961108390317164::1770698988::1770688733::1::::<><><>0<>0<>0cb503ac5c05b3021771ba25d59bc735<>res://.godot/imported/jump.fbx-d02da51662565d0b2fe1c02adf20a10e.scn::
+left strafe walk.fbx::PackedScene::5777464676172440598::1770698988::1770688733::1::::<><><>0<>0<>a20ef98f4a0b77ec66dfe9fb6f2bd8f1<>res://.godot/imported/left strafe walk.fbx-cc3b1481ca946b23022867769fea4299.scn::
+left strafe.fbx::PackedScene::6124394904013345691::1770698988::1770688733::1::::<><><>0<>0<>5d31ed382da1486633a919ec3cbe4ee2<>res://.godot/imported/left strafe.fbx-847725f08b53c1129c391c4a78a39b07.scn::
+left turn (2).fbx::PackedScene::4764368066000488025::1770698988::1770688733::1::::<><><>0<>0<>ffe914ad03bf316e668a2731540d7d68<>res://.godot/imported/left turn (2).fbx-529aa2183450d44c1e7bbe92cd9ab18b.scn::
+left turn.fbx::PackedScene::1129102473980149390::1770698988::1770688733::1::::<><><>0<>0<>077fc12cd816fcd75bcaa6e7b6aa1f63<>res://.godot/imported/left turn.fbx-65f4bf775746d50ec50ec82aa79d7f08.scn::
+luz_model.fbx::PackedScene::497475121173650572::1770698988::1770688733::1::::<><><>0<>0<>6345aacf6b7457271198e98523cb77c3<>res://.godot/imported/luz_model.fbx-be7b5e1be86ab0728c6c2e3afe681d9a.scn::uid://cer3e30xgq6k::::res://assets/models/characters/luz/luz_model_0.png
+luz_model_0.png::CompressedTexture2D::149717643913471784::1770688729::1770688741::1::::<><><>0<>0<>6e702302ead7a4da76c5d3b80a15d9b3<>res://.godot/imported/luz_model_0.png-4d82f4fdd45c248bfa7b4aa9d4bb7646.s3tc.ctex::
+right strafe walk.fbx::PackedScene::8926282295715914154::1770698988::1770688726::1::::<><><>0<>0<>d3e92faeb21479e3de3c0c9d4ebed948<>res://.godot/imported/right strafe walk.fbx-6c4169fdf32d16dd6f044e059c550cee.scn::
+right strafe.fbx::PackedScene::3048315614433403572::1770698988::1770688726::1::::<><><>0<>0<>30cc93587bca7ea88483987f5a3b1c9e<>res://.godot/imported/right strafe.fbx-21dc015c57cc5e1c1aa90542d432d8d5.scn::
+right turn (2).fbx::PackedScene::1914310734525369667::1770698988::1770688726::1::::<><><>0<>0<>6cf2f5f8e1cdb4a6da5671a87b099913<>res://.godot/imported/right turn (2).fbx-9389f5472d5132727d965e9e9246fc82.scn::
+right turn.fbx::PackedScene::1517993363425495268::1770698988::1770688726::1::::<><><>0<>0<>6de81a2edbd46d138354814a1cbebd7a<>res://.godot/imported/right turn.fbx-149024f73fe37ae3760e5b17c2a0193d.scn::
+Roundhouse Kick.fbx::PackedScene::8682754424021497121::1770688400::1770688726::1::::<><><>0<>0<>43f3480cbde76afa3c38038d92feacb9<>res://.godot/imported/Roundhouse Kick.fbx-ca3d4e9ef836fed19bd75ce2feda2a76.scn::uid://b5mb8vmw25x1k::::res://assets/models/characters/luz/Roundhouse Kick_0.png
+Roundhouse Kick_0.png::CompressedTexture2D::4516979296639290938::1770688723::1770688741::1::::<><><>0<>0<>8af600a0219fc866ef014eeae88ccdfb<>res://.godot/imported/Roundhouse Kick_0.png-5bf09b363b70bed0802d740d836f299e.s3tc.ctex::
+running.fbx::PackedScene::962089756893428271::1770698988::1770688720::1::::<><><>0<>0<>fe77d52533ebe5a6b80545711d070cb6<>res://.godot/imported/running.fbx-d1c0ce5b9de94fe0d629db323900ed95.scn::
+walking.fbx::PackedScene::8875469730360806786::1770698988::1770688720::1::::<><><>0<>0<>6acf39ba369f2ad17e65bcc4ef6c7149<>res://.godot/imported/walking.fbx-d19bcd4922a29817efbc5a16d8c43d11.scn::
+::res://models/::1770688112
+::res://models/character/::1770689813
+Cross Punch.fbx::AnimationLibrary::6707646611760289912::1770688379::1770689745::1::::<><><>0<>0<>bd0f213d35557509d4e3a4e0f08e8d83<>res://.godot/imported/Cross Punch.fbx-38907b26f6f1f61d50db5136c5230fa5.res::
+Cross Punch_0.png::CompressedTexture2D::2525778051137088601::1770688710::1770688741::1::::<><><>0<>0<>e01b448ee9d871665459dafe909f4a77<>res://.godot/imported/Cross Punch_0.png-3c23734cf481c46dfab436227cbdac3d.s3tc.ctex::
+idle.fbx::AnimationLibrary::332222575776370479::1770698988::1770689753::1::::<><><>0<>0<>59d4a1266c332befab6cf0d5fc9b4b2d<>res://.godot/imported/idle.fbx-e0fe83e3e13179b188a1d8e32a4011b8.res::
+jump.fbx::AnimationLibrary::1378419340426528397::1770698988::1770689758::1::::<><><>0<>0<>913ec493e2fade23893885510722b7fc<>res://.godot/imported/jump.fbx-a388780cd4954be44a75ecf8c7ab2dff.res::
+left strafe walk.fbx::AnimationLibrary::1181935213182576398::1770698988::1770689763::1::::<><><>0<>0<>ce26af1394e2ac41bdec6d3c806e8500<>res://.godot/imported/left strafe walk.fbx-97c002c5490d0c9e7946bfe02214e530.res::
+left strafe.fbx::AnimationLibrary::5727539123413369781::1770698988::1770689767::1::::<><><>0<>0<>f8ad55a4ab7d012cde1b796e08ace0be<>res://.godot/imported/left strafe.fbx-242243845cdd31bf50e29a217ce1705c.res::
+left turn (2).fbx::AnimationLibrary::3983296136522175202::1770698988::1770689773::1::::<><><>0<>0<>07cae3f14eaa503a4e66049670ae9b72<>res://.godot/imported/left turn (2).fbx-aea7311c793e0e028b9c6ee53992dfcb.res::
+left turn.fbx::AnimationLibrary::2733139633776681007::1770698988::1770689780::1::::<><><>0<>0<>7a0012f545a8823cb5f6dc78c8287f33<>res://.godot/imported/left turn.fbx-447ffc623cda1aeac5e23278a19f3c7e.res::
+luz_model.fbx::PackedScene::4774677398886621183::1770698988::1770688982::1::::<><><>0<>0<>0b07e01f46f765c3767973af34781da3<>res://.godot/imported/luz_model.fbx-9f03612c0c9f482c47667675bdb2d36e.scn::uid://icoamipt8bb3::::res://models/character/luz_model_0.png
+luz_model.png::CompressedTexture2D::1426105289994552374::1770688716::1770688987::1::::<><><>0<>0<>10af974bd398c0ffde82e7de0f99be30<>res://.godot/imported/luz_model.png-d80b4114b01bc0f3d245dcd36023f92f.s3tc.ctex::
+luz_model_0.png::CompressedTexture2D::566490185857966170::1770688978::1770688982::1::::<><><>0<>0<>9722057e09efaeda80188c3919d0daf3<>res://.godot/imported/luz_model_0.png-d8d983da886e4115dffa28f7d06f23cd.s3tc.ctex::
+right strafe walk.fbx::AnimationLibrary::5347149710733151720::1770698988::1770689785::1::::<><><>0<>0<>b5e690cfb6152c7d12a5c729c0382a79<>res://.godot/imported/right strafe walk.fbx-c464db4c92779c87ce80cf6fa6ccb1e2.res::
+right strafe.fbx::AnimationLibrary::603565655519873772::1770698988::1770689790::1::::<><><>0<>0<>747ab9ab4a8d5c7a8a604d09715cd94d<>res://.godot/imported/right strafe.fbx-faea8c89940818cb279355410acf8020.res::
+right turn (2).fbx::AnimationLibrary::1315266374927939111::1770698988::1770689796::1::::<><><>0<>0<>c5d3e2fafaab9c7381701cfb22b68b47<>res://.godot/imported/right turn (2).fbx-6de47021029fdabf4a63a5ac3193f4de.res::
+right turn.fbx::AnimationLibrary::8768516973284549534::1770698988::1770689800::1::::<><><>0<>0<>12de7219d7112ee08845519324a91e38<>res://.godot/imported/right turn.fbx-454a936d03486224677282e21be56152.res::
+Roundhouse Kick.fbx::AnimationLibrary::9104016805501537320::1770688400::1770689805::1::::<><><>0<>0<>5d17b9ed60049428b2a75370ca93ed8a<>res://.godot/imported/Roundhouse Kick.fbx-1b8e9ee723d05fb109e8cc8b2ce6bda0.res::
+Roundhouse Kick_0.png::CompressedTexture2D::2848913314946014332::1770688702::1770688741::1::::<><><>0<>0<>1cb84cb91d218dcef78f9f4d5afcbc1f<>res://.godot/imported/Roundhouse Kick_0.png-a6255c2ad751f32b74c871ab8b2283ff.s3tc.ctex::
+running.fbx::AnimationLibrary::5419371891643520790::1770698988::1770689813::1::::<><><>0<>0<>715da21a7c62c4d6fd07308e68c50b8d<>res://.godot/imported/running.fbx-e5bc5c7b8c5d383db05f00b2674f8e31.res::
+walking.fbx::AnimationLibrary::2689187821526711333::1770698988::1770689809::1::::<><><>0<>0<>7a7c94b4cffdbccd071a2148b29a116b<>res://.godot/imported/walking.fbx-91dbca180b306cad19a3d0dea854aecc.res::
+::res://models/enemys/::1770688112
 ::res://scenes/::1770523752
 camera_rig.tscn::PackedScene::269157375872424924::1770523706::0::1::::<><><>0<>0<><>::res://scripts/camera/orbit_camera.gd
 main.tscn::PackedScene::3987734815830496780::1770523776::0::1::::<><><>0<>0<><>::uid://bw1xm5y2kp4v8::::res://scenes/player/luz.tscn<>uid://c2nj8k4m7wax2::::res://scenes/player/bicycle.tscn<>uid://d3m8n7k5v2x1::::res://scenes/camera_rig.tscn<>res://scripts/managers/transition_manager.gd<>uid://c5rl0n3paw4y6::::res://scenes/ui/hud.tscn<>uid://c4plam2n8v3x5::::res://scenes/npcs/enemy_base.tscn
 ::res://scenes/npcs/::1770523742
 enemy_base.tscn::PackedScene::6839952058746008116::1770523743::0::1::::<><><>0<>0<><>::res://scripts/npc/npc_controller.gd<>res://scripts/core/state_machine.gd<>res://scripts/npc/states/npc_idle_state.gd<>res://scripts/npc/states/npc_patrol_state.gd<>res://scripts/npc/states/npc_chase_state.gd<>res://scripts/npc/states/npc_attack_state.gd<>res://scripts/npc/states/npc_hit_state.gd<>res://scripts/npc/states/npc_dead_state.gd
-::res://scenes/player/::1770523689
+::res://scenes/player/::1770690009
 bicycle.tscn::PackedScene::6695383011171296153::1770523689::0::1::::<><><>0<>0<><>::res://scripts/vehicle/bicycle_controller.gd
-luz.tscn::PackedScene::3985668599712409047::1770523683::0::1::::<><><>0<>0<><>::res://scripts/player/player_controller.gd<>res://scripts/core/state_machine.gd<>res://scripts/player/states/idle_state.gd<>res://scripts/player/states/walk_state.gd<>res://scripts/player/states/run_state.gd<>res://scripts/player/states/jump_state.gd<>res://scripts/player/states/crouch_state.gd<>res://scripts/player/states/punch_state.gd<>res://scripts/player/states/kick_state.gd<>res://scripts/player/states/hit_state.gd
+luz.tscn::PackedScene::3985668599712409047::1770690009::0::1::::<><><>0<>0<><>::uid://dh812jpfwwm4x::::res://scripts/player/player_controller.gd<>uid://c2th7vn5wmkaq::::res://models/character/Cross Punch.fbx<>uid://caa5ieqmh88d4::::res://models/character/luz_model.fbx<>uid://c1rf400urlxcm::::res://scripts/core/state_machine.gd<>uid://c2vykav7ovwl8::::res://scripts/player/states/idle_state.gd<>uid://d2yb3dvtbg30g::::res://models/character/Roundhouse Kick.fbx<>uid://ey6wl26hsgo2::::res://models/character/idle.fbx<>uid://b5umgjtgjly7x::::res://scripts/player/states/walk_state.gd<>uid://tvymod0nvet6::::res://models/character/jump.fbx<>uid://b1fv0rqt4khij::::res://scripts/player/states/run_state.gd<>uid://cnupy53qshlbp::::res://models/character/left strafe.fbx<>uid://b58mngr0tq8ub::::res://scripts/player/states/jump_state.gd<>uid://cqscbkhev2dka::::res://scripts/player/states/crouch_state.gd<>uid://q3skheeukh4i::::res://models/character/left strafe walk.fbx<>uid://be67n7qniwnud::::res://models/character/left turn.fbx<>uid://bs0gt6svd1sdc::::res://scripts/player/states/punch_state.gd<>uid://byosuxjflwkl::::res://scripts/player/states/kick_state.gd<>uid://bw0sknbriotre::::res://models/character/left turn (2).fbx<>uid://cipy12wffr66g::::res://scripts/player/states/hit_state.gd<>uid://iumvxyoator1::::res://models/character/right strafe.fbx<>uid://cigg1llifiwuy::::res://models/character/right strafe walk.fbx<>uid://dw6sgtvrb42cw::::res://models/character/right turn.fbx<>uid://s0eili0n00lv::::res://models/character/right turn (2).fbx<>uid://cjhgi7l1fsgp7::::res://models/character/running.fbx<>uid://bekwsbj1bml5n::::res://models/character/walking.fbx
 ::res://scenes/ui/::1770523752
 hud.tscn::PackedScene::6914314356854749267::1770523752::0::1::::<><><>0<>0<><>::res://scripts/ui/hud.gd
 ::res://scripts/::1770523750
-::res://scripts/camera/::1770523588
-orbit_camera.gd::GDScript::6036852558425494755::1770523588::0::1::::OrbitCamera<>Node3D<><>0<>0<><>::
-::res://scripts/core/::1770523460
+::res://scripts/camera/::1770523982
+orbit_camera.gd::GDScript::6036852558425494755::1770684056::0::1::::OrbitCamera<>Node3D<><>0<>0<><>::
+::res://scripts/core/::1770523982
 state.gd::GDScript::278224182481409022::1770523460::0::1::::State<>Node<><>0<>0<><>::
 state_machine.gd::GDScript::6633202449416883796::1770523458::0::1::::StateMachine<>Node<><>0<>0<><>::
-::res://scripts/managers/::1770523586
+::res://scripts/managers/::1770523982
 transition_manager.gd::GDScript::6020039680213995952::1770523587::0::1::::TransitionManager<>Node<><>0<>0<><>::
-::res://scripts/npc/::1770523621
+::res://scripts/npc/::1770523982
 npc_controller.gd::GDScript::5685336190591387304::1770523617::0::1::::NPCController<>CharacterBody3D<><>0<>0<><>::
-::res://scripts/npc/states/::1770523640
+::res://scripts/npc/states/::1770523982
 npc_attack_state.gd::GDScript::728718437016048846::1770523636::0::1::::<>State<><>0<>0<><>::
 npc_chase_state.gd::GDScript::3693280511612330792::1770523631::0::1::::<>State<><>0<>0<><>::
 npc_dead_state.gd::GDScript::3872354551605840659::1770523640::0::1::::<>State<><>0<>0<><>::
 npc_hit_state.gd::GDScript::7264860514215192936::1770523638::0::1::::<>State<><>0<>0<><>::
 npc_idle_state.gd::GDScript::6835722533720450238::1770523622::0::1::::<>State<><>0<>0<><>::
 npc_patrol_state.gd::GDScript::8894991769425375866::1770523625::0::1::::<>State<><>0<>0<><>::
-::res://scripts/player/::1770523497
-player_controller.gd::GDScript::7720335776816536337::1770523494::0::1::::PlayerController<>CharacterBody3D<><>0<>0<><>::
-::res://scripts/player/states/::1770523521
+::res://scripts/player/::1770523982
+player_controller.gd::GDScript::7720335776816536337::1770690021::0::1::::PlayerController<>CharacterBody3D<><>0<>0<><>::
+::res://scripts/player/states/::1770523982
 crouch_state.gd::GDScript::5933145421205236168::1770523513::0::1::::<>State<><>0<>0<><>::
 hit_state.gd::GDScript::5366822873619995160::1770523521::0::1::::<>State<><>0<>0<><>::
 idle_state.gd::GDScript::6712767178128162103::1770523498::0::1::::<>State<><>0<>0<><>::
@@ -40,7 +84,7 @@ kick_state.gd::GDScript::120617178338048703::1770523519::0::1::::<>State<><>0<>0
 punch_state.gd::GDScript::3701829202059499856::1770523516::0::1::::<>State<><>0<>0<><>::
 run_state.gd::GDScript::4222973127264211381::1770523505::0::1::::<>State<><>0<>0<><>::
 walk_state.gd::GDScript::4534113368938431007::1770523501::0::1::::<>State<><>0<>0<><>::
-::res://scripts/ui/::1770523750
+::res://scripts/ui/::1770523982
 hud.gd::GDScript::2592426908008992366::1770523750::0::1::::<>CanvasLayer<><>0<>0<><>::
-::res://scripts/vehicle/::1770523569
-bicycle_controller.gd::GDScript::403531581425591978::1770523569::0::1::::BicycleController<>VehicleBody3D<><>0<>0<><>::
+::res://scripts/vehicle/::1770523982
+bicycle_controller.gd::GDScript::403531581425591978::1770524062::0::1::::BicycleController<>VehicleBody3D<><>0<>0<><>::

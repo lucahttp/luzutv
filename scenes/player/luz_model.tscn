@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cjh6hwf5s3w7a"]
+
+[ext_resource type="PackedScene" uid="uid://caa5ieqmh88d4" path="res://models/character/luz_model.fbx" id="1_0mdd4"]
+
+[node name="luz_model" unique_id=164880380 instance=ExtResource("1_0mdd4")]
+
+[node name="Armature_001" parent="." index="0" unique_id=66325536]
+transform = Transform3D(100, 0, 0, 0, 0, 100, 0, -100, 0, -0.0023000122, -0.0003647995, -0.00023014203)
+
+[node name="Skeleton3D" parent="Armature_001" index="0" unique_id=129340885]
+bones/0/rotation = Quaternion(1, -4.2351647e-22, 4.30333e-22, 0)
+bones/1/rotation = Quaternion(0.71424764, 1.085715e-08, -1.06260805e-08, 0.69989306)
+bones/2/rotation = Quaternion(0.011156206, -1.6884533e-09, -3.205237e-10, 0.9999378)
+bones/5/rotation = Quaternion(-0.7070704, 0.7070704, -0.0071708714, 0.007170871)
+bones/6/rotation = Quaternion(0.011173408, -6.5088546e-11, 3.8880482e-10, 0.99993765)
+bones/9/rotation = Quaternion(-0.42635813, -0.5641088, -0.42635807, 0.5641089)
+bones/10/rotation = Quaternion(-0.10577609, -0.6344858, 0.0882423, 0.76056075)
+bones/11/rotation = Quaternion(-3.5216713e-10, 0.009589593, -5.9371805e-09, 0.99995404)
+bones/12/rotation = Quaternion(-0.09174259, 1.8831717e-07, -0.041242052, 0.99492836)
+bones/13/rotation = Quaternion(0.09955916, -0.2744207, 0.014337867, 0.9563345)
+bones/15/rotation = Quaternion(-0.12391017, -0.28702867, 0.2672782, 0.9114951)
+bones/17/rotation = Quaternion(-0.42635813, 0.5641088, 0.42635807, 0.5641089)
+bones/18/rotation = Quaternion(-0.10577605, 0.63448584, -0.088242255, 0.76056075)
+bones/19/rotation = Quaternion(-6.9189214e-09, -0.0095897345, 2.6775524e-09, 0.9999541)
+bones/20/rotation = Quaternion(-0.091742575, -1.980657e-07, 0.041242052, 0.99492836)
+bones/21/rotation = Quaternion(0.09809995, 0.19733784, -0.022226134, 0.9751617)
+bones/23/rotation = Quaternion(-0.12391051, 0.28702778, -0.2672781, 0.9114953)

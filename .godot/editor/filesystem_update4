@@ -1,2 +1,3 @@
-res://scripts/vehicle/bicycle_controller.gd
-res://scripts/camera/orbit_camera.gd
+res://scenes/player/luz.tscn
+res://scripts/player/player_controller.gd
+res://scenes/main.tscn

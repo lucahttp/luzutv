@@ -13,7 +13,7 @@ class_name OrbitCamera
 @export var mouse_sensitivity := 0.002
 @export var min_pitch := -30.0
 @export var max_pitch := 60.0
-@export var auto_rotate_speed := 2.0  # For vehicle following
+@export var auto_rotate_speed := 2.0 # For vehicle following
 
 ## Collision
 @export var collision_margin := 0.3
