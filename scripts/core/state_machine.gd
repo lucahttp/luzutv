@@ -48,4 +48,4 @@ func transition_to(state_name: String) -> void:
 
 ## Get the name of the current state
 func get_current_state_name() -> String:
-	return current_state.name if current_state else ""
+	return str(current_state.name) if current_state else ""

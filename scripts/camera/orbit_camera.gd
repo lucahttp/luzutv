@@ -124,7 +124,7 @@ func set_follow_target(target: Node3D, instant := false) -> void:
 			global_position = target_pos + offset
 
 ## Blend to a new target (called by transition manager)
-func blend_to_target(target: Node3D, t: float) -> void:
+func blend_to_target(target: Node3D, _t: float) -> void:
 	follow_target = target
 	is_auto_rotating = target is VehicleBody3D
 	# The lerp in _physics_process handles the blend naturally
