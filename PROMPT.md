@@ -1,3 +1,4 @@
+V1.0
 Nombre del juego: Luz en Once (regalo de cumpleaños para mi novia)
 
 Actúa como un Desarrollador Senior de Godot 4 especializado en juegos 3D de mundo abierto.
@@ -37,3 +38,17 @@ Google Antigravity para generar codigo y arquitectura del proyecto (sos literalm
 
 todo lo que no puedas generar con las herramientas mencionadas, recomendame que otras herramientas o recursos puedo usar
 ademas de que me digas como puedo hacer las partes del juego que no puedas generar voz y las tengas que si o si hacer yo de manera manual
+
+
+
+
+
+V1.1
+
+I want to implement psx visuals in my game, can you download the assets and give me an overview of their differences and similarities, offer to me the best option to implement them into our game, and explain the parts that you cannot do by yourself and requires me to do it by myself?
+
+https://godotshaders.com/shader/ps1-psx-postprocessing/
+https://github.com/snotbane/psx_visuals
+https://github.com/GarrettGunnell/Godot-PSX
+https://github.com/marmitoTH/godot-psx-shaders
+https://github.com/scolastico/psx_visuals_gd4

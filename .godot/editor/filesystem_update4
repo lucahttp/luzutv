@@ -1,0 +1,7 @@
+res://scenes/main.tscn
+res://scenes/player/luz.tscn
+res://addons/psx_visuals_gd4/shaders/psx.gdshaderinc
+res://addons/psx_visuals_gd4/shaders/psx_opaque.gdshader
+res://addons/psx_visuals_gd4/shaders/psx_opaque_double.gdshader
+res://addons/psx_visuals_gd4/shaders/psx_transparent.gdshader
+res://addons/psx_visuals_gd4/shaders/psx_transparent_double.gdshader
