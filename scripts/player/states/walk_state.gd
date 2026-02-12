@@ -3,7 +3,7 @@
 extends State
 
 func enter() -> void:
-	actor.play_animation("walk", true)
+	actor.play_animation("walk", true, (actor as PlayerController).walk_anim_speed)
 	(actor as PlayerController).set_running(false)
 
 func physics_update(delta: float) -> void:

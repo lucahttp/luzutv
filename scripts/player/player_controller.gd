@@ -11,6 +11,8 @@ class_name PlayerController
 @export var acceleration := 15.0
 @export var friction := 20.0
 @export var rotation_speed := 10.0
+@export var walk_anim_speed := 1.2
+@export var run_anim_speed := 1.8
 
 ## Jump parameters
 @export_group("Jump")

@@ -3,7 +3,7 @@
 extends State
 
 func enter() -> void:
-	actor.play_animation("run", true)
+	actor.play_animation("run", true, (actor as PlayerController).run_anim_speed)
 	(actor as PlayerController).set_running(true)
 
 func exit() -> void:

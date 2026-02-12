@@ -1,0 +1,4 @@
+res://scripts/player/player_controller.gd
+res://scripts/player/states/run_state.gd
+res://scripts/player/states/walk_state.gd
+res://scenes/player/luz.tscn
