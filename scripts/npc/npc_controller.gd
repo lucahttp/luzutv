@@ -18,12 +18,15 @@ class_name NPCController
 @export var attack_cooldown := 1.0
 @export var detection_range := 10.0
 @export var lose_target_range := 15.0
+@export var knockback_resistance := 0.0 # 0 to 1
+@export var knockback_decay := 15.0
 
 ## State
 var current_health: int
 var target: Node3D = null
 var can_attack := true
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+var knockback_velocity := Vector3.ZERO
 
 ## Node references
 @onready var state_machine: StateMachine = $StateMachine
@@ -55,7 +58,21 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	
+	# Combine movement velocity with knockback for move_and_slide
+	var final_velocity = velocity + knockback_velocity
+	
+	# We use a temporary velocity to not pollute the controller's intended velocity
+	# with the collision response of the knockback too much, 
+	# but we do want the character to stop if they hit a wall.
+	var old_velocity = velocity
+	velocity = final_velocity
 	move_and_slide()
+	
+	# Decay knockback
+	knockback_velocity = knockback_velocity.move_toward(Vector3.ZERO, knockback_decay * delta)
+	
+	# Recover some of the velocity from move_and_slide if needed, 
+	# but usually for NPCs we let the next move_to_position call set it.
 
 ## Move towards a target position using navigation
 func move_to_position(target_pos: Vector3, speed: float, delta: float) -> void:
@@ -108,6 +125,15 @@ func take_damage(amount: int, attacker: Node3D = null) -> void:
 	if current_health <= 0:
 		die()
 	else:
+		# Apply knockback
+		if attacker:
+			var knock_dir := (global_position - attacker.global_position).normalized()
+			knock_dir.y = 0.4 # Slight upward pop
+			
+			# Calculate force (could be passed as argument, but we'll use a default or based on damage)
+			var force := 8.0 * (1.0 - knockback_resistance)
+			knockback_velocity = knock_dir * force
+			
 		state_machine.transition_to("hit")
 
 ## Die

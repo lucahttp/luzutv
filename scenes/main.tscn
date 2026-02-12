@@ -41,6 +41,9 @@ size = Vector3(10, 15, 10)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_building"]
 albedo_color = Color(0.85, 0.8, 0.7, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_building"]
+size = Vector3(10, 15, 10)
+
 [node name="Main" type="Node3D" unique_id=1833677118]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1067951652]
@@ -71,20 +74,40 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 7.5, 20)
 mesh = SubResource("BoxMesh_building")
 surface_material_override/0 = SubResource("StandardMaterial3D_building")
 
+[node name="StaticBody3D" type="StaticBody3D" parent="Buildings/Building1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/Building1/StaticBody3D"]
+shape = SubResource("BoxShape3D_building")
+
 [node name="Building2" type="MeshInstance3D" parent="Buildings" unique_id=876927082]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 7.5, 20)
 mesh = SubResource("BoxMesh_building")
 surface_material_override/0 = SubResource("StandardMaterial3D_building")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Buildings/Building2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/Building2/StaticBody3D"]
+shape = SubResource("BoxShape3D_building")
 
 [node name="Building3" type="MeshInstance3D" parent="Buildings" unique_id=1717415641]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 7.5, -20)
 mesh = SubResource("BoxMesh_building")
 surface_material_override/0 = SubResource("StandardMaterial3D_building")
 
+[node name="StaticBody3D" type="StaticBody3D" parent="Buildings/Building3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/Building3/StaticBody3D"]
+shape = SubResource("BoxShape3D_building")
+
 [node name="Building4" type="MeshInstance3D" parent="Buildings" unique_id=2118711729]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 7.5, -20)
 mesh = SubResource("BoxMesh_building")
 surface_material_override/0 = SubResource("StandardMaterial3D_building")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Buildings/Building4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Buildings/Building4/StaticBody3D"]
+shape = SubResource("BoxShape3D_building")
 
 [node name="PlayerSystem" type="Node3D" parent="." unique_id=3620505]
 

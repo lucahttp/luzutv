@@ -47,6 +47,7 @@ class_name PlayerController
 @onready var state_machine: StateMachine = $StateMachine
 @onready var animation_player: AnimationPlayer = $Model/AnimationPlayer
 @onready var model: Node3D = $Model
+
 @onready var hitbox: Area3D = $HitboxPivot/Hitbox
 @onready var hurtbox: Area3D = $Hurtbox
 @onready var interaction_ray: RayCast3D = $InteractionRay
@@ -82,8 +83,16 @@ func _physics_process(delta: float) -> void:
 	# Apply gravity
 	if not is_on_floor():
 		velocity.y -= gravity * gravity_multiplier * delta
+	else:
+		# Small downward force to keep grounded properly and reset bouncy velocity
+		if velocity.y < 0:
+			velocity.y = -0.1
 	
 	move_and_slide()
+	
+	# Keep model centered on the CharacterBody3D (root motion is extracted by AnimationPlayer)
+	if model:
+		model.position = Vector3.ZERO
 
 ## Get the movement direction based on input
 func get_movement_direction() -> Vector3:
