@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://j12krw1sjgef"]
+
+[ext_resource type="Script" uid="uid://buiodtaxohx2i" path="res://scripts/ui/main_menu.gd" id="1_main_menu"]
+
+[node name="MainMenu" type="CanvasLayer" unique_id=1383815556]
+script = ExtResource("1_main_menu")
+
+[node name="Background" type="ColorRect" parent="." unique_id=2108321961]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.85)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2106550711]
+custom_minimum_size = Vector2(200, 200)
+anchors_preset = -1
+anchor_left = 0.39200002
+anchor_top = 0.68600005
+anchor_right = 0.39200002
+anchor_bottom = 0.68600005
+offset_left = 57.359985
+offset_top = -380.88007
+offset_right = 357.36
+offset_bottom = -20.880066
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="VBoxContainer" unique_id=380740020]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.843137, 0, 1)
+theme_override_font_sizes/font_size = 64
+text = "LUZ EN ONCE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Subtitle" type="Label" parent="VBoxContainer" unique_id=233654544]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 24
+text = "el videojuegos"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="VBoxContainer" unique_id=1882212520]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="VBoxContainer" unique_id=2048738913]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "JUGAR"
+
+[node name="OptionsButton" type="Button" parent="VBoxContainer" unique_id=2048738914]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "OPCIONES"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=2048738915]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "SALIR"

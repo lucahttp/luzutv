@@ -5,23 +5,23 @@
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_hud")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="LeftPanel" type="MarginContainer" parent="."]
 anchors_preset = 0
 offset_right = 300.0
-offset_bottom = 120.0
+offset_bottom = 180.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="LeftPanel"]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 12
 
-[node name="HealthBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
+[node name="HealthBar" type="ProgressBar" parent="LeftPanel/VBoxContainer"]
 custom_minimum_size = Vector2(250, 30)
 layout_mode = 2
 max_value = 100.0
 value = 100.0
 show_percentage = false
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HealthBar"]
+[node name="HealthLabel" type="Label" parent="LeftPanel/VBoxContainer/HealthBar"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -36,16 +36,47 @@ text = "100 / 100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ModeLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="ScoreContainer" type="HBoxContainer" parent="LeftPanel/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "A PIE"
 
-[node name="SpeedLabel" type="Label" parent="MarginContainer/VBoxContainer"]
-visible = false
+[node name="ScoreLabel" type="Label" parent="LeftPanel/VBoxContainer/ScoreContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "PUNTUACIÓN: "
+
+[node name="ScoreValue" type="Label" parent="LeftPanel/VBoxContainer/ScoreContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.843137, 0, 1)
+theme_override_font_sizes/font_size = 22
+text = "0"
+
+[node name="ComboContainer" type="HBoxContainer" parent="LeftPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ComboLabel" type="Label" parent="LeftPanel/VBoxContainer/ComboContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "0.0 km/h"
+text = "COMBO: "
+
+[node name="ComboValue" type="Label" parent="LeftPanel/VBoxContainer/ComboContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.5, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "x1"
+
+[node name="ModeContainer" type="HBoxContainer" parent="LeftPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ModeLabel" type="Label" parent="LeftPanel/VBoxContainer/ModeContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "MODO: "
+
+[node name="ModeValue" type="Label" parent="LeftPanel/VBoxContainer/ModeContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 20
+text = "A PIE"
 
 [node name="InteractionHint" type="Label" parent="."]
 anchors_preset = 7

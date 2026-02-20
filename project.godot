@@ -16,12 +16,15 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Luz en Once"
 config/description="Un juego de acción en tercera persona estilo Simpsons Hit & Run ambientado en el barrio de Once, Buenos Aires. Regalo de cumpleaños para Luz."
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="res://scenes/ui/main_menu.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
+AudioManager="*res://scripts/managers/audio_manager.gd"
+ScoreManager="*res://scripts/managers/score_manager.gd"
+GameManager="*res://scripts/managers/game_manager.gd"
 PsxVisualsGd4AutoLoad="*uid://b4dnux6e0qv14"
 PsxVisualsGd4AutoApply="*uid://cmjt04s4c2n3j"
 

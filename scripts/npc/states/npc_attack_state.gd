@@ -9,9 +9,10 @@ var timer := 0.0
 var has_attacked := false
 
 func enter() -> void:
-	timer = attack_duration
 	has_attacked = false
 	actor.play_animation("attack")
+	# Use real animation length so we don't cut it short or wait too long
+	timer = (actor as NPCController).get_animation_length("attack")
 
 func exit() -> void:
 	(actor as NPCController).disable_hitbox()

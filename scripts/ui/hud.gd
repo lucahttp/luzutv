@@ -2,20 +2,18 @@
 # Manages the heads-up display for player health, speed, etc.
 extends CanvasLayer
 
-## Node references
-@onready var health_bar: ProgressBar = $MarginContainer/VBoxContainer/HealthBar
-@onready var health_label: Label = $MarginContainer/VBoxContainer/HealthBar/Label
-@onready var speed_label: Label = $MarginContainer/VBoxContainer/SpeedLabel
-@onready var mode_label: Label = $MarginContainer/VBoxContainer/ModeLabel
+@onready var health_bar: ProgressBar = $LeftPanel/VBoxContainer/HealthBar
+@onready var health_label: Label = $LeftPanel/VBoxContainer/HealthBar/HealthLabel
+@onready var score_value: Label = $LeftPanel/VBoxContainer/ScoreContainer/ScoreValue
+@onready var combo_value: Label = $LeftPanel/VBoxContainer/ComboContainer/ComboValue
+@onready var mode_value: Label = $LeftPanel/VBoxContainer/ModeContainer/ModeValue
 @onready var interaction_hint: Label = $InteractionHint
 
-## References
 var player: PlayerController
 var bicycle: BicycleController
 var transition_manager: TransitionManager
 
 func _ready() -> void:
-	# Find references
 	await get_tree().process_frame
 	player = get_tree().get_first_node_in_group("player")
 	bicycle = get_tree().get_first_node_in_group("bicycle")
@@ -27,7 +25,6 @@ func _ready() -> void:
 			if transition_manager:
 				break
 	
-	# Connect signals
 	if player:
 		player.health_changed.connect(_on_player_health_changed)
 		_on_player_health_changed(player.current_health, player.max_health)
@@ -35,22 +32,23 @@ func _ready() -> void:
 	if transition_manager:
 		transition_manager.mode_changed.connect(_on_mode_changed)
 	
-	# Initial state
-	mode_label.text = "A PIE"
-	speed_label.visible = false
+	mode_value.text = "A PIE"
 	interaction_hint.visible = false
 
 func _process(_delta: float) -> void:
-	_update_speed_display()
+	_update_combo_display()
+	_update_score_display()
 	_update_interaction_hint()
 
-func _update_speed_display() -> void:
-	if transition_manager and transition_manager.is_on_bike and bicycle:
-		speed_label.visible = true
-		var speed := bicycle.get_speed_kmh()
-		speed_label.text = "%.1f km/h" % speed
-	else:
-		speed_label.visible = false
+func _update_combo_display() -> void:
+	if has_node("/root/ScoreManager"):
+		var combo: int = $"/root/ScoreManager".combo
+		combo_value.text = "x%d" % max(1, combo)
+
+func _update_score_display() -> void:
+	if has_node("/root/ScoreManager"):
+		var score: int = $"/root/ScoreManager".score
+		score_value.text = str(score)
 
 func _update_interaction_hint() -> void:
 	if not player or not bicycle:
@@ -58,14 +56,12 @@ func _update_interaction_hint() -> void:
 		return
 	
 	if transition_manager and transition_manager.is_on_bike:
-		# Show dismount hint if slow enough
 		if bicycle.linear_velocity.length() < 5.0:
 			interaction_hint.visible = true
 			interaction_hint.text = "[E] Bajarse de la bici"
 		else:
 			interaction_hint.visible = false
 	else:
-		# Show mount hint if near bike
 		var distance := player.global_position.distance_to(bicycle.global_position)
 		if distance < 2.5:
 			interaction_hint.visible = true
@@ -80,6 +76,6 @@ func _on_player_health_changed(new_health: int, max_health: int) -> void:
 
 func _on_mode_changed(is_on_bike: bool) -> void:
 	if is_on_bike:
-		mode_label.text = "BICICLETA"
+		mode_value.text = "BICICLETA"
 	else:
-		mode_label.text = "A PIE"
+		mode_value.text = "A PIE"

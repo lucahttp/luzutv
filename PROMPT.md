@@ -52,3 +52,8 @@ https://github.com/snotbane/psx_visuals
 https://github.com/GarrettGunnell/Godot-PSX
 https://github.com/marmitoTH/godot-psx-shaders
 https://github.com/scolastico/psx_visuals_gd4
+
+
+
+v1.2
+

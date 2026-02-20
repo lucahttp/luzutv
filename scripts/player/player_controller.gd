@@ -11,8 +11,8 @@ class_name PlayerController
 @export var acceleration := 15.0
 @export var friction := 20.0
 @export var rotation_speed := 10.0
-@export var walk_anim_speed := 1.2
-@export var run_anim_speed := 1.8
+@export var walk_anim_speed := 1.0
+@export var run_anim_speed := 1.0
 
 ## Jump parameters
 @export_group("Jump")
@@ -95,6 +95,11 @@ func _physics_process(delta: float) -> void:
 	# Keep model centered on the CharacterBody3D (root motion is extracted by AnimationPlayer)
 	if model:
 		model.position = Vector3.ZERO
+	
+	# Audio: Footsteps
+	if is_on_floor() and velocity.length() > 0.5:
+		if has_node("/root/AudioManager"):
+			$"/root/AudioManager".process_footsteps(delta, is_running)
 
 ## Get the movement direction based on input
 func get_movement_direction() -> Vector3:
@@ -202,6 +207,20 @@ func _on_hitbox_area_entered(area: Area3D) -> void:
 		if target.has_method("take_damage"):
 			var damage := punch_damage if state_machine.get_current_state_name() == "Punch" else kick_damage
 			target.take_damage(damage, self)
+			
+			# Audio & Feel
+			if has_node("/root/AudioManager"):
+				var sound_type = "punch" if damage == punch_damage else "kick"
+				$"/root/AudioManager".call("play_" + sound_type)
+			
+			# Screen Shake
+			var camera = get_viewport().get_camera_3d()
+			if camera and camera.has_method("add_shake"):
+				var shake_amount = 0.3 if damage == punch_damage else 0.5
+				camera.add_shake(shake_amount)
+			elif camera and camera.get_parent().has_method("add_shake"):
+				var shake_amount = 0.3 if damage == punch_damage else 0.5
+				camera.get_parent().add_shake(shake_amount)
 
 ## Hurtbox connected - we got hit
 func _on_hurtbox_area_entered(_area: Area3D) -> void:

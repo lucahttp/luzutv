@@ -8,11 +8,15 @@ var timer := 0.0
 
 func enter() -> void:
 	timer = despawn_delay
-	actor.play_animation("death")
+	actor.play_animation("dead")
 	
 	# Disable physics
 	var npc: NPCController = actor as NPCController
 	npc.set_physics_process(false)
+	
+	# Add score
+	if has_node("/root/ScoreManager"):
+		$"/root/ScoreManager".add_enemy_killed()
 
 func frame_update(delta: float) -> void:
 	timer -= delta
