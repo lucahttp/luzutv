@@ -18,15 +18,15 @@ func physics_update(delta: float) -> void:
 		state_machine.transition_to("idle")
 		return
 	
-	if not Input.is_action_pressed("run"):
+	if not InputHandler.is_run_pressed:
 		state_machine.transition_to("walk")
 		return
 	
-	if Input.is_action_just_pressed("jump"):
+	if InputHandler.is_jump_just_pressed:
 		state_machine.transition_to("jump")
 		return
 	
-	if Input.is_action_just_pressed("attack"):
+	if InputHandler.is_attack_just_pressed:
 		state_machine.transition_to("punch")
 		return
 	

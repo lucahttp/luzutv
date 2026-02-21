@@ -83,8 +83,8 @@ func _apply_idle_brake() -> void:
 	steering = move_toward(steering, 0, 0.1)
 
 func _handle_acceleration() -> void:
-	var throttle: float = Input.get_action_strength("accelerate")
-	var brake_input: float = Input.get_action_strength("brake")
+	var throttle: float = InputHandler.throttle
+	var brake_input: float = InputHandler.brake
 	
 	# Apply engine force with curve for arcade feel
 	if throttle > 0:
@@ -100,7 +100,7 @@ func _handle_acceleration() -> void:
 		brake = coast_deceleration
 
 func _handle_steering(delta: float) -> void:
-	var steer_input: float = Input.get_axis("steer_right", "steer_left")
+	var steer_input: float = InputHandler.steer_direction
 	
 	# Reduce steering at high speeds for stability
 	var current_speed: float = linear_velocity.length()

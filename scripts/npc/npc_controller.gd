@@ -69,8 +69,8 @@ func _ready() -> void:
 		vision_ray.collide_with_areas = true
 
 	# Apply material override if set (fix for missing textures)
-	# Ensuring 4x scale for bigger enemies
-	scale = Vector3(4, 4, 4)
+	# Escala 2x para enemigos visible pero no exagerados
+	scale = Vector3(2, 2, 2)
 	
 	if material_override:
 		_apply_material_override(model)

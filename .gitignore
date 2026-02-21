@@ -1,3 +1,8 @@
+# Large files and build exports
+.media/
+exports/
+models/enemys/frontierfriend.fbx
+
 # Godot-specific ignores
 .godot/
 .import/

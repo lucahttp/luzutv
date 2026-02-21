@@ -63,6 +63,7 @@ var current_health := 100
 var max_health := 100
 var is_on_bike := false
 var nearby_bike: Node3D = null
+var _audio_manager: Node = null
 
 ## Signals
 signal health_changed(new_health: int, max_health: int)
@@ -73,6 +74,9 @@ signal dismounted_bike
 func _ready() -> void:
 	add_to_group("player")
 	hitbox.monitoring = false
+	
+	# Cachear referencia al AudioManager para rendimiento
+	_audio_manager = get_tree().get_root().get_node("AudioManager")
 	
 	# Connect hitbox signal
 	hitbox.area_entered.connect(_on_hitbox_area_entered)
@@ -98,12 +102,12 @@ func _physics_process(delta: float) -> void:
 	
 	# Audio: Footsteps
 	if is_on_floor() and velocity.length() > 0.5:
-		if has_node("/root/AudioManager"):
-			$"/root/AudioManager".process_footsteps(delta, is_running)
+		if _audio_manager:
+			_audio_manager.process_footsteps(delta, is_running)
 
 ## Get the movement direction based on input
 func get_movement_direction() -> Vector3:
-	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var input_dir := InputHandler.move_direction
 	var camera := get_viewport().get_camera_3d()
 	
 	if camera:
@@ -209,9 +213,9 @@ func _on_hitbox_area_entered(area: Area3D) -> void:
 			target.take_damage(damage, self)
 			
 			# Audio & Feel
-			if has_node("/root/AudioManager"):
+			if _audio_manager:
 				var sound_type = "punch" if damage == punch_damage else "kick"
-				$"/root/AudioManager".call("play_" + sound_type)
+				_audio_manager.call("play_" + sound_type)
 			
 			# Screen Shake
 			var camera = get_viewport().get_camera_3d()

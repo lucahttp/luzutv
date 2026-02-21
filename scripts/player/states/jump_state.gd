@@ -25,7 +25,7 @@ func physics_update(delta: float) -> void:
 		jump_count = 1
 	
 	# Handle double jump
-	if Input.is_action_just_pressed("jump") and jump_count < max_jumps:
+	if InputHandler.is_jump_just_pressed and jump_count < max_jumps:
 		player.velocity.y = player.jump_velocity
 		player.play_animation("jump", false, 1.8) # Even faster for double jump
 		jump_count += 1
@@ -38,7 +38,7 @@ func physics_update(delta: float) -> void:
 	# We check air_time to avoid instant landing on the same frame as jump
 	if player.is_on_floor() and has_jumped and air_time > 0.1:
 		if direction.length() > 0:
-			if Input.is_action_pressed("run"):
+			if InputHandler.is_run_pressed:
 				state_machine.transition_to("run")
 			else:
 				state_machine.transition_to("walk")

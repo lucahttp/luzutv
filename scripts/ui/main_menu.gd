@@ -32,9 +32,11 @@ func _play_intro_animation() -> void:
 		delay += 0.15
 
 func _on_play_pressed() -> void:
+	# Reproducir sonido
 	if has_node("/root/AudioManager"):
 		$"/root/AudioManager".play_punch()
 	
+	# Cambiar a la escena del juego directamente
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
 
 func _on_options_pressed() -> void:

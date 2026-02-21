@@ -28,7 +28,7 @@ func physics_update(delta: float) -> void:
 		can_combo = true
 	
 	# Check for combo input
-	if can_combo and Input.is_action_just_pressed("attack"):
+	if can_combo and InputHandler.is_attack_just_pressed:
 		state_machine.transition_to("kick")
 		return
 	

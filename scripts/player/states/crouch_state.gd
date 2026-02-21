@@ -14,7 +14,7 @@ func physics_update(delta: float) -> void:
 	var direction := player.get_movement_direction()
 	
 	# Check for state transitions
-	if not Input.is_action_pressed("crouch"):
+	if not InputHandler.is_crouch_pressed:
 		if direction.length() > 0:
 			state_machine.transition_to("walk")
 		else:

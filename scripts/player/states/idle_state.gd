@@ -11,18 +11,18 @@ func physics_update(delta: float) -> void:
 	
 	# Check for state transitions (deadzone to prevent flickering)
 	if direction.length() > 0.1:
-		if Input.is_action_pressed("run"):
+		if InputHandler.is_run_pressed:
 			state_machine.transition_to("run")
 		else:
 			state_machine.transition_to("walk")
 	
-	if Input.is_action_just_pressed("jump"):
+	if InputHandler.is_jump_just_pressed:
 		state_machine.transition_to("jump")
 	
-	if Input.is_action_pressed("crouch"):
+	if InputHandler.is_crouch_pressed:
 		state_machine.transition_to("crouch")
 	
-	if Input.is_action_just_pressed("attack"):
+	if InputHandler.is_attack_just_pressed:
 		state_machine.transition_to("punch")
 	
 	# Apply friction when idle

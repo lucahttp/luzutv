@@ -45,8 +45,7 @@ func _process(delta: float) -> void:
 	_footstep_timer -= delta
 
 # Llamar desde player controller
-func process_footsteps(delta: float, is_running: bool) -> void:
-	_footstep_timer -= delta
+func process_footsteps(_delta: float, is_running: bool) -> void:
 	if _footstep_timer <= 0:
 		play_footstep(is_running)
 

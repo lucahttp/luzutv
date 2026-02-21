@@ -59,7 +59,6 @@ func _spawn_enemy() -> void:
 	
 	get_parent().add_child(enemy)
 	current_enemies.append(enemy)
-	print("EnemySpawner: Enemigo spawneado en ", enemy.global_position)
 
 func _get_random_spawn_position(player_pos: Vector3) -> Vector3:
 	var attempts = 0
