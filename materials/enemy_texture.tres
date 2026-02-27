@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://ddp1n2m3k4o5"]
+
+[ext_resource type="Texture2D" uid="uid://cxq2w3e4r5t6y" path="res://models/enemys/5df0060c-060f-410d-a288-3779ccd8e0fe_texture.jpg" id="1_tex"]
+
+[resource]
+resource_name = "FrontierMaterial"
+albedo_texture = ExtResource("1_tex")
+roughness = 0.5
+cull_mode = 2

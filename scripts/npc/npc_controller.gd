@@ -39,12 +39,13 @@ var last_known_position: Vector3 = Vector3.ZERO
 
 ## Node references
 @onready var state_machine: StateMachine = $StateMachine
-@onready var animation_player: AnimationPlayer = $Model/AnimationPlayer
 @onready var model: Node3D = $Model
 @onready var hitbox: Area3D = $HitboxPivot/Hitbox
 @onready var hurtbox: Area3D = $Hurtbox
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var vision_ray: RayCast3D = $VisionRay if has_node("VisionRay") else null
+
+var animation_player: AnimationPlayer
 
 ## Signals
 signal health_changed(new_health: int, max_health: int)
@@ -55,9 +56,30 @@ func _ready() -> void:
 	current_health = max_health
 	hitbox.monitoring = false
 	
+	# Buscar dinamicamente el mejor animation player
+	_setup_animation_player(model)
+	
 	# Connect signals
 	hitbox.area_entered.connect(_on_hitbox_area_entered)
 	
+func _setup_animation_player(node: Node) -> void:
+	# Busca el AnimationPlayer con mas animaciones dentro del modelo 3D
+	var best_ap = null
+	var max_anims = 0
+	
+	var queue = [node]
+	while queue.size() > 0:
+		var current = queue.pop_front()
+		if current is AnimationPlayer:
+			var anim_count = current.get_animation_list().size()
+			if anim_count > max_anims:
+				max_anims = anim_count
+				best_ap = current
+		
+		for child in current.get_children():
+			queue.append(child)
+			
+	animation_player = best_ap
 	# Configure navigation
 	if nav_agent:
 		nav_agent.path_desired_distance = 0.5
@@ -78,6 +100,9 @@ func _ready() -> void:
 func _apply_material_override(node: Node) -> void:
 	if node is MeshInstance3D:
 		node.material_override = material_override
+		# Fuerza la aplicación en todos los slots de material por si acaso el override falla en FBX
+		for i in range(node.mesh.get_surface_count()):
+			node.set_surface_override_material(i, material_override)
 	
 	for child in node.get_children():
 		_apply_material_override(child)
@@ -161,27 +186,24 @@ func can_hear_player() -> bool:
 
 ## Move towards a target position using navigation
 func move_to_position(target_pos: Vector3, speed: float, delta: float) -> void:
-	if not nav_agent:
-		return
+	# Como no hay NavigationMesh en la ciudad generada, forzamos el movimiento directo siempre
+	_direct_move(target_pos, speed, delta)
+
+## Movimiento direccional simple como fallback
+func _direct_move(target_pos: Vector3, speed: float, delta: float) -> void:
+	var direction := (target_pos - global_position).normalized()
+	direction.y = 0
 	
-	nav_agent.target_position = target_pos
-	
-	if nav_agent.is_navigation_finished():
+	if direction.length() < 0.1:
 		velocity.x = 0
 		velocity.z = 0
 		return
-	
-	var next_pos := nav_agent.get_next_path_position()
-	var direction := (next_pos - global_position).normalized()
-	direction.y = 0
-	
+		
 	velocity.x = move_toward(velocity.x, direction.x * speed, acceleration * delta)
 	velocity.z = move_toward(velocity.z, direction.z * speed, acceleration * delta)
 	
-	# Rotate towards movement
-	if direction.length() > 0.1:
-		var target_rotation := atan2(direction.x, direction.z)
-		model.rotation.y = lerp_angle(model.rotation.y, target_rotation, rotation_speed * 0.1)
+	var target_rotation := atan2(direction.x, direction.z)
+	model.rotation.y = lerp_angle(model.rotation.y, target_rotation, rotation_speed * delta)
 
 ## Check if target is in range
 func is_target_in_range(range_distance: float) -> bool:
@@ -220,9 +242,9 @@ func take_damage(amount: int, attacker: Node3D = null) -> void:
 		# Apply knockback
 		if attacker:
 			var knock_dir := (global_position - attacker.global_position).normalized()
-			knock_dir.y = 0.4
+			knock_dir.y = 0.0
 			
-			var force := 8.0 * (1.0 - knockback_resistance)
+			var force := 3.0 * (1.0 - knockback_resistance)
 			knockback_velocity = knock_dir * force
 		
 		state_machine.transition_to("hit")
@@ -254,49 +276,63 @@ func _on_hitbox_area_entered(area: Area3D) -> void:
 	if area.is_in_group("hurtbox") and area.owner != self:
 		var target_node := area.owner
 		if target_node.has_method("take_damage"):
-			target_node.take_damage(attack_damage, self)
+			target_node.take_damage(attack_damage, self )
 
-## Animation Mapping
+## Animation Mapping con palabras clave
 @export var anim_map: Dictionary = {
-	"idle": "Idle_fighting_remap",
-	"patrol": "Strut Walking_remap",
-	"chase": "Running_remap",
-	"attack": "Punching_remap",
-	"hit": "Hand Raising_remap",
-	"dead": "Dying_remap",
+	"idle": ["idle", "stand"],
+	"patrol": ["walk", "strut"],
+	"chase": ["run", "sprint"],
+	"attack": ["punch", "attack"],
+	"hit": ["hit", "hand raising", "react"],
+	"dead": ["die", "dying", "death"],
 }
 
-## Play animation by name
+## Play animation by name with fallback
 func play_animation(anim_name: String, loop: bool = false, speed: float = 1.0) -> void:
 	if not animation_player:
 		return
+		
+	var found_anim := _find_best_animation(anim_name)
 	
-	var real_name: String = anim_map.get(anim_name, anim_name)
-	var found_name: String = ""
-	
-	if animation_player.has_animation(real_name):
-		found_name = real_name
-	elif animation_player.has_animation(anim_name):
-		found_name = anim_name
-	else:
-		push_warning("NPC Animation not found: '%s' (mapped: '%s')" % [anim_name, real_name])
+	if found_anim == "":
+		push_warning("NPC Animation not found for action: '%s'" % anim_name)
 		return
 	
-	var anim: Animation = animation_player.get_animation(found_name)
+	var anim: Animation = animation_player.get_animation(found_anim)
 	if anim:
 		anim.loop_mode = Animation.LOOP_LINEAR if loop else Animation.LOOP_NONE
 	
 	animation_player.speed_scale = speed
-	if animation_player.current_animation != found_name:
-		animation_player.play(found_name, 0.2)
+	if animation_player.current_animation != found_anim:
+		animation_player.play(found_anim, 0.2)
+
+func _find_best_animation(action_name: String) -> String:
+	# Busca matching exacto primero
+	if animation_player.has_animation(action_name):
+		return action_name
+		
+	var anim_list = animation_player.get_animation_list()
+	
+	# Obtiene palabras clave a buscar
+	var keywords = [action_name.to_lower()]
+	if anim_map.has(action_name):
+		keywords.append_array(anim_map[action_name])
+	
+	# Buscar la primera animacion que contenga una de las palabras clave
+	for anim in anim_list:
+		var lname = anim.to_lower()
+		for kw in keywords:
+			if lname.contains(kw):
+				return anim
+				
+	return ""
 
 ## Get animation duration
 func get_animation_length(anim_name: String) -> float:
 	if not animation_player:
 		return 0.5
-	var real_name: String = anim_map.get(anim_name, anim_name)
-	if animation_player.has_animation(real_name):
-		return animation_player.get_animation(real_name).length
-	elif animation_player.has_animation(anim_name):
-		return animation_player.get_animation(anim_name).length
+	var found_anim = _find_best_animation(anim_name)
+	if found_anim != "":
+		return animation_player.get_animation(found_anim).length
 	return 0.5

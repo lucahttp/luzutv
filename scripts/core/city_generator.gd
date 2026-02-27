@@ -4,20 +4,40 @@ class_name CityGenerator
 
 var map_loader: Node
 var materials = {}
+var building_texture: ImageTexture
 
 const LOD_BUILDING_DISTANCE := 30.0
 const LOD_DETAIL_DISTANCE := 50.0
 
 func _ready():
 	map_loader = get_node_or_null("../MapLoader")
+	_crear_textura_edificios()
 	_crear_materiales()
 	generar_barrio()
+
+func _crear_textura_edificios():
+	var size = 128
+	var img = Image.create_empty(size, size, false, Image.FORMAT_RGBA8)
+	img.fill(Color(1, 1, 1, 1)) # Base blanca/neutra
+	
+	# Dibujar cuadrícula (ventanas)
+	for x in range(size):
+		for y in range(size):
+			var in_window_x = (x % 32) > 4
+			var in_window_y = (y % 32) > 4
+			if in_window_x and in_window_y:
+				# Simular reflejo/sombra de ventana interior
+				var shade = randf_range(0.2, 0.4)
+				img.set_pixel(x, y, Color(shade, shade, shade + 0.1, 1.0))
+	
+	building_texture = ImageTexture.create_from_image(img)
+
 
 func generar_barrio():
 	var tamano_cuadra = 80.0
 	var ancho_calle = 10.0
-	var num_cuadras = 5  # Reducido para web
-	var half = num_cuadras / 2
+	var num_cuadras = 5 # Reducido para web
+	var half: int = num_cuadras / 2
 	
 	for x in range(-half, half + 1):
 		for z in range(-half, half + 1):
@@ -68,6 +88,9 @@ func _crear_materiales():
 	for color in colores_residenciales:
 		var mat = StandardMaterial3D.new()
 		mat.albedo_color = color.darkened(randf_range(-0.1, 0.1))
+		mat.albedo_texture = building_texture
+		mat.uv1_scale = Vector3(0.5, 0.5, 0.5)
+		mat.uv1_triplanar = true
 		mat.roughness = randf_range(0.75, 0.95)
 		mat.metallic = randf_range(0.0, 0.1)
 		materials["residencial"].append(mat)
@@ -87,6 +110,9 @@ func _crear_materiales():
 	for color in colores_comerciales:
 		var mat = StandardMaterial3D.new()
 		mat.albedo_color = color.darkened(randf_range(-0.1, 0.15))
+		mat.albedo_texture = building_texture
+		mat.uv1_scale = Vector3(0.5, 0.5, 0.5)
+		mat.uv1_triplanar = true
 		mat.roughness = randf_range(0.7, 0.9)
 		mat.metallic = randf_range(0.0, 0.15)
 		materials["comercial"].append(mat)
@@ -126,6 +152,15 @@ func _crear_materiales():
 	materials["vidriera"].metallic = 0.3
 	materials["vidriera"].transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	materials["vidriera"].albedo_color.a = 0.3
+	
+	# Materiales para arboles
+	materials["tronco"] = StandardMaterial3D.new()
+	materials["tronco"].albedo_color = Color(0.4, 0.25, 0.1)
+	materials["tronco"].roughness = 0.9
+	
+	materials["hojas"] = StandardMaterial3D.new()
+	materials["hojas"].albedo_color = Color(0.2, 0.6, 0.2)
+	materials["hojas"].roughness = 0.8
 
 func _crear_calle(pos, tamano):
 	var mesh = MeshInstance3D.new()
@@ -172,6 +207,37 @@ func _crear_vereda(pos: Vector3, tamano_cuadra: float, ancho_calle: float):
 	v2.position = pos + Vector3(0, 0, largo / 2 + ancho_vereda / 2)
 	v2.material_override = materials["vereda"]
 	add_child(v2)
+	
+	# Agregar arboles simples (LOD)
+	var num_arboles = int(largo / 10.0)
+	for i in range(num_arboles):
+		var x_offset = - largo / 2.0 + 5.0 + i * 10.0
+		if randf() > 0.3: # 70% chance of a tree
+			_crear_arbol(pos + Vector3(x_offset, 0.15, -largo / 2 - ancho_vereda / 2))
+		if randf() > 0.3:
+			_crear_arbol(pos + Vector3(x_offset, 0.15, largo / 2 + ancho_vereda / 2))
+
+func _crear_arbol(pos: Vector3):
+	# Tronco
+	var tronco = MeshInstance3D.new()
+	var cyl = CylinderMesh.new()
+	cyl.top_radius = 0.2
+	cyl.bottom_radius = 0.3
+	cyl.height = 2.0
+	tronco.mesh = cyl
+	tronco.position = pos + Vector3(0, 1.0, 0)
+	tronco.material_override = materials["tronco"]
+	add_child(tronco)
+	
+	# Hojas (estilo Mario 64 - esfera simple)
+	var hojas = MeshInstance3D.new()
+	var sphere = SphereMesh.new()
+	sphere.radius = 1.5
+	sphere.height = 3.0
+	hojas.mesh = sphere
+	hojas.position = pos + Vector3(0, 2.5, 0)
+	hojas.material_override = materials["hojas"]
+	add_child(hojas)
 
 func _crear_plaza(pos):
 	var mesh = MeshInstance3D.new()
@@ -231,7 +297,7 @@ func _crear_edificio(pos: Vector3, tamano: Vector3, es_comercial: bool, show_win
 		_agregar_ventanas(pos, tamano)
 
 func _agregar_ventanas(pos: Vector3, tamano: Vector3):
-	var mat_vidrio = materials["vidriera"]
+	var _mat_vidrio = materials["vidriera"]
 	var mat_negro = StandardMaterial3D.new()
 	mat_negro.albedo_color = Color(0.1, 0.1, 0.12)
 	mat_negro.roughness = 0.5
@@ -245,7 +311,7 @@ func _agregar_ventanas(pos: Vector3, tamano: Vector3):
 	var num_pisos = int(altura / altura_piso)
 	var ventana_ancho = 0.8
 	var ventana_alto = 1.2
-	var separacion_horizontal = 4.0  # Mayor separación para reducir objetos
+	var separacion_horizontal = 4.0 # Mayor separación para reducir objetos
 	
 	for cara in [Vector3.FORWARD, Vector3.BACK]:
 		for piso in range(num_pisos):
@@ -253,8 +319,8 @@ func _agregar_ventanas(pos: Vector3, tamano: Vector3):
 			var z_offset = cara.z * (profundidad_edificio / 2.0 + 0.01)
 			
 			var num_ventanas = int(ancho_edificio / separacion_horizontal)
-			for i in range(min(num_ventanas, 4)):  # Max 4 ventanas
-				var x_offset = -ancho_edificio / 2.0 + separacion_horizontal / 2.0 + i * separacion_horizontal
+			for i in range(min(num_ventanas, 4)): # Max 4 ventanas
+				var x_offset = - ancho_edificio / 2.0 + separacion_horizontal / 2.0 + i * separacion_horizontal
 				
 				var marco = MeshInstance3D.new()
 				var box_marco = BoxMesh.new()

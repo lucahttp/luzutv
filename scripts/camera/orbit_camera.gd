@@ -5,9 +5,9 @@ class_name OrbitCamera
 
 ## Follow settings
 @export var follow_target: Node3D
-@export var follow_distance := 8.0
-@export var follow_height := 4.0
-@export var follow_speed := 5.0
+@export var follow_distance := 4.5
+@export var follow_height := 1.8
+@export var follow_speed := 6.0
 
 ## Rotation settings
 @export var mouse_sensitivity := 0.002

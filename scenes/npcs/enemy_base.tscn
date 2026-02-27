@@ -1,104 +1,90 @@
-[gd_scene load_steps=11 format=3 uid="uid://c4pk9m2n8v3x5"]
+[gd_scene format=3 uid="uid://c4plam2n8v3x5"]
 
-[ext_resource type="PackedScene" path="res://models/enemys/frontierfriend.fbx" id="9_frontierfriend"]
-[ext_resource type="Script" path="res://scripts/npc/npc_controller.gd" id="1_npc"]
-[ext_resource type="Script" path="res://scripts/core/state_machine.gd" id="2_statemachine"]
-[ext_resource type="Script" path="res://scripts/npc/states/npc_idle_state.gd" id="3_idle"]
-[ext_resource type="Script" path="res://scripts/npc/states/npc_patrol_state.gd" id="4_patrol"]
-[ext_resource type="Script" path="res://scripts/npc/states/npc_chase_state.gd" id="5_chase"]
-[ext_resource type="Script" path="res://scripts/npc/states/npc_attack_state.gd" id="6_attack"]
-[ext_resource type="Script" path="res://scripts/npc/states/npc_hit_state.gd" id="7_hit"]
-[ext_resource type="Script" path="res://scripts/npc/states/npc_dead_state.gd" id="8_dead"]
-[ext_resource type="Material" uid="uid://b8j2x4k3q5p1" path="res://materials/enemy_red.tres" id="10_material"]
+[ext_resource type="Script" uid="uid://cnaawk28bxw6k" path="res://scripts/npc/npc_controller.gd" id="1_npc"]
+[ext_resource type="Script" uid="uid://c1rf400urlxcm" path="res://scripts/core/state_machine.gd" id="2_statemachine"]
+[ext_resource type="Script" uid="uid://c4njl7ifu351s" path="res://scripts/npc/states/npc_idle_state.gd" id="3_idle"]
+[ext_resource type="Script" uid="uid://dyy2hknfw78yg" path="res://scripts/npc/states/npc_patrol_state.gd" id="4_patrol"]
+[ext_resource type="Script" uid="uid://bsvb140dxueom" path="res://scripts/npc/states/npc_chase_state.gd" id="5_chase"]
+[ext_resource type="Script" uid="uid://km85eo3l0103" path="res://scripts/npc/states/npc_attack_state.gd" id="6_attack"]
+[ext_resource type="Script" uid="uid://dbrfgrdjipm0o" path="res://scripts/npc/states/npc_hit_state.gd" id="7_hit"]
+[ext_resource type="Script" uid="uid://bvf2d4pet0oe2" path="res://scripts/npc/states/npc_dead_state.gd" id="8_dead"]
+[ext_resource type="PackedScene" uid="uid://brjo6tqyb7jii" path="res://models/enemys/frontierfriend.fbx" id="9_frontierfriend"]
+[ext_resource type="Material" uid="uid://ddp1n2m3k4o5" path="res://materials/enemy_texture.tres" id="10_material"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
 radius = 0.4
 height = 1.8
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_body"]
-radius = 0.35
-height = 1.6
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_enemy"]
-albedo_color = Color(0.8, 0.3, 0.3, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_head"]
-radius = 0.25
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_hitbox"]
-size = Vector3(1, 1, 1.5)
+size = Vector3(2.5, 1.5, 2.5)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hurtbox"]
-radius = 0.5
-height = 1.8
+radius = 1.0
 
-[node name="EnemyBase" type="CharacterBody3D" groups=["enemies"]]
+[node name="EnemyBase" type="CharacterBody3D" unique_id=869622689 groups=["enemies"]]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_npc")
-material_override = null
+material_override = ExtResource("10_material")
 detection_range = 12.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=920864569]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_body")
 
-[node name="Model" type="Node3D" parent="."]
+[node name="Model" type="Node3D" parent="." unique_id=991575279]
 
-[node name="boliviandude" type="Node3D" parent="Model"]
+[node name="boliviandude" type="Node3D" parent="Model" unique_id=2041629609]
 
-[node name="frontierfriend" parent="Model/boliviandude" instance=ExtResource("9_frontierfriend")]
-scale = Vector3(1, 1, 1)
+[node name="frontierfriend" parent="Model/boliviandude" unique_id=1640490510 instance=ExtResource("9_frontierfriend")]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Model"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Model" unique_id=176147078]
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="StateMachine" type="Node" parent="." unique_id=1356112208 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_statemachine")
 initial_state = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine"]
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1569082206]
 script = ExtResource("3_idle")
 
-[node name="Patrol" type="Node" parent="StateMachine"]
+[node name="Patrol" type="Node" parent="StateMachine" unique_id=2100887317]
 script = ExtResource("4_patrol")
 
-[node name="Chase" type="Node" parent="StateMachine"]
+[node name="Chase" type="Node" parent="StateMachine" unique_id=356963120]
 script = ExtResource("5_chase")
 
-[node name="Attack" type="Node" parent="StateMachine"]
+[node name="Attack" type="Node" parent="StateMachine" unique_id=661367690]
 script = ExtResource("6_attack")
 
-[node name="Hit" type="Node" parent="StateMachine"]
+[node name="Hit" type="Node" parent="StateMachine" unique_id=1613092488]
 script = ExtResource("7_hit")
 
-[node name="Dead" type="Node" parent="StateMachine"]
+[node name="Dead" type="Node" parent="StateMachine" unique_id=1611575127]
 script = ExtResource("8_dead")
 
-[node name="HitboxPivot" type="Node3D" parent="."]
+[node name="HitboxPivot" type="Node3D" parent="." unique_id=77079544]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="Hitbox" type="Area3D" parent="HitboxPivot"]
+[node name="Hitbox" type="Area3D" parent="HitboxPivot" unique_id=1885959848]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HitboxPivot/Hitbox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitboxPivot/Hitbox" unique_id=1848542029]
 shape = SubResource("BoxShape3D_hitbox")
 
-[node name="Hurtbox" type="Area3D" parent="." groups=["hurtbox"]]
+[node name="Hurtbox" type="Area3D" parent="." unique_id=1965624208 groups=["hurtbox"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 collision_layer = 8
 collision_mask = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" unique_id=1299302135]
 shape = SubResource("CapsuleShape3D_hurtbox")
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=932108557]
 path_desired_distance = 0.5
 target_desired_distance = 1.5
 
-[node name="VisionRay" type="RayCast3D" parent="."]
-collision_layer = 0
+[node name="VisionRay" type="RayCast3D" parent="." unique_id=489307666]
 collision_mask = 7
 collide_with_areas = true
-collide_with_bodies = true

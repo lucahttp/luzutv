@@ -5,7 +5,7 @@ extends State
 func enter() -> void:
 	actor.play_animation("idle")
 
-func physics_update(delta: float) -> void:
+func physics_update(_delta: float) -> void:
 	var npc: NPCController = actor as NPCController
 	
 	# Buscar jugador
