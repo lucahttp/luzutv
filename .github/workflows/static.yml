@@ -1,4 +1,4 @@
-name: "Export and Deploy Godot Web Game"
+name: "Build and Deploy Godot Web"
 
 on:
   push:
@@ -17,28 +17,28 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: barichello/godot-github-action:4.3 # Ensure this matches your Godot version
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           lfs: true
 
-      - name: Setup Export Templates
-        run: |
-          mkdir -v -p ~/.local/share/godot/export_templates/
-          mv /root/.local/share/godot/export_templates/* ~/.local/share/godot/export_templates/
+      - name: Build Godot Web
+        id: build
+        uses: manleydev/build-godot-action@v1.5.0
+        with:
+          # This MUST match the name of your export preset in Godot
+          name: index 
+          preset: web
+          debugMode: "false"
 
-      - name: Web Build
-        run: |
-          mkdir -v -p build/web
-          # "Web" must match the name of your export preset in Godot exactly
-          godot --headless --export-release "Web" build/web/index.html
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
+          # The Action places the build in a 'build' folder by default
           path: 'build/web'
 
   deploy:
