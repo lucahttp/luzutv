@@ -15,34 +15,44 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  export_web:
     runs-on: ubuntu-latest
+    name: Export Web Job
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           lfs: true
 
-      - name: Build Godot Web
-        id: build
-        uses: manleydev/build-godot-action@v1.5.0
+      - name: Godot Web Export
+        uses: firebelley/godot-export@v6.0.0
         with:
-          # This MUST match the name of your export preset in Godot
-          name: index 
-          preset: web
-          debugMode: "false"
+          godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux_headless.64.zip
+          godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz
+          relative_project_path: ./
+          archive_export_output: false
+          # "web" MUST match your export preset name in Godot exactly
+          export_preset_name: web 
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      - name: Prepare Files for Pages
+        run: |
+          mkdir -p build/web
+          # Moving the exported files from the default folder to our deploy folder
+          if [ -d "exports/web" ]; then
+            mv exports/web/* build/web/
+          fi
+          # Ensure an index.html exists for GitHub Pages
+          if [ -f build/web/web.html ] && [ ! -f build/web/index.html ]; then
+            mv build/web/web.html build/web/index.html
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # The Action places the build in a 'build' folder by default
           path: 'build/web'
 
   deploy:
-    needs: build
+    needs: export_web
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
