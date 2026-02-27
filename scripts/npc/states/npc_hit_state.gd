@@ -3,7 +3,6 @@
 extends State
 
 @export var stagger_duration := 0.3
-@export var knockback_force := 5.0
 
 var timer := 0.0
 
@@ -14,24 +13,21 @@ func enter() -> void:
 	actor.play_animation("hit")
 	(actor as NPCController).disable_hitbox()
 	
-	# Apply knockback
-	# Apply knockback
+	# Apply rotation to look at attacker
 	var npc: NPCController = actor as NPCController
 	if npc.target:
-		var knockback_dir := (npc.global_position - npc.target.global_position).normalized()
-		npc.velocity.x = knockback_dir.x * knockback_force
-		npc.velocity.z = knockback_dir.z * knockback_force
-		
-		# Add score for hit
-		if has_node("/root/ScoreManager"):
-			var points = $"/root/ScoreManager".points_hit_strong if knockback_force > 10 else $"/root/ScoreManager".points_hit_weak
-			$"/root/ScoreManager".add_hit_points(points)
+		# Extract target position but keep it on same Y level to avoid tilting up/down
+		var look_pos = npc.target.global_position
+		look_pos.y = npc.global_position.y
+		# Encarar violentamente (1 frame) con una rotación segura
+		if npc.global_position.distance_to(look_pos) > 0.1:
+			npc.model.look_at(look_pos, Vector3.UP, true)
 
 func physics_update(delta: float) -> void:
 	var npc: NPCController = actor as NPCController
 	timer -= delta
 	
-	# Apply friction
+	# Apply friction from the actual built-in physics
 	npc.velocity.x = move_toward(npc.velocity.x, 0, 20.0 * delta)
 	npc.velocity.z = move_toward(npc.velocity.z, 0, 20.0 * delta)
 	

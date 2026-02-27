@@ -293,6 +293,15 @@ func _crear_edificio(pos: Vector3, tamano: Vector3, es_comercial: bool, show_win
 	mesh.mesh = box
 	add_child(mesh)
 	
+	# Colisiones
+	var body = StaticBody3D.new()
+	var collision = CollisionShape3D.new()
+	var shape = BoxShape3D.new()
+	shape.size = tamano
+	collision.shape = shape
+	body.add_child(collision)
+	mesh.add_child(body)
+	
 	if show_windows:
 		_agregar_ventanas(pos, tamano)
 

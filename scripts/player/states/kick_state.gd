@@ -16,11 +16,24 @@ func physics_update(delta: float) -> void:
 	var player: PlayerController = actor as PlayerController
 	timer -= delta
 	
+	var direction := player.get_movement_direction()
 	# End of attack
 	if timer <= 0:
-		state_machine.transition_to("idle")
+		if direction.length() > 0:
+			if InputHandler.is_run_pressed:
+				state_machine.transition_to("run")
+			else:
+				state_machine.transition_to("walk")
+		else:
+			state_machine.transition_to("idle")
+		return
+	
+	# Apply gravity if in the air
+	if not player.is_on_floor():
+		player.velocity.y -= player.gravity * player.gravity_multiplier * delta
 	
 	# Slight forward movement during attack
-	var direction := player.model.global_transform.basis.z.normalized()
-	player.velocity.x = direction.x * 3.0
-	player.velocity.z = direction.z * 3.0
+	if player.is_on_floor():
+		var forward_dir := player.model.global_transform.basis.z.normalized()
+		player.velocity.x = forward_dir.x * 3.0
+		player.velocity.z = forward_dir.z * 3.0

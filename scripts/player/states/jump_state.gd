@@ -29,6 +29,10 @@ func physics_update(delta: float) -> void:
 		player.velocity.y = player.jump_velocity
 		player.play_animation("jump", false, 1.8) # Even faster for double jump
 		jump_count += 1
+		
+	if InputHandler.is_attack_just_pressed:
+		state_machine.transition_to("punch")
+		return
 	
 	# Allow some air control
 	var direction := player.get_movement_direction()
