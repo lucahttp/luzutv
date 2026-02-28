@@ -45,25 +45,24 @@ func _ready() -> void:
 	# Configure wheels
 	_setup_wheels()
 
+func _configure_wheel_defaults(wheel: VehicleWheel3D) -> void:
+	wheel.wheel_radius = 0.35
+	wheel.suspension_stiffness = 60.0
+	wheel.suspension_travel = 0.15
+	wheel.damping_compression = 0.8
+	wheel.damping_relaxation = 2.0
+
 func _setup_wheels() -> void:
 	# Front wheel - steering only
+	_configure_wheel_defaults(front_wheel)
 	front_wheel.use_as_traction = false
 	front_wheel.use_as_steering = true
-	front_wheel.wheel_radius = 0.35
-	front_wheel.suspension_stiffness = 60.0
-	front_wheel.suspension_travel = 0.15
-	front_wheel.damping_compression = 0.8
-	front_wheel.damping_relaxation = 2.0
 	front_wheel.wheel_friction_slip = 2.0
 	
 	# Rear wheel - traction
+	_configure_wheel_defaults(rear_wheel)
 	rear_wheel.use_as_traction = true
 	rear_wheel.use_as_steering = false
-	rear_wheel.wheel_radius = 0.35
-	rear_wheel.suspension_stiffness = 60.0
-	rear_wheel.suspension_travel = 0.15
-	rear_wheel.damping_compression = 0.8
-	rear_wheel.damping_relaxation = 2.0
 	rear_wheel.wheel_friction_slip = 2.5
 
 func _physics_process(delta: float) -> void:
