@@ -81,8 +81,9 @@ func _transition_camera_to(target: Node3D) -> void:
 		return
 	
 	# Use camera rig's transition method
-	var tween := create_tween()
-	tween.tween_method(
-		func(t: float): camera_rig.call("blend_to_target", target, t),
-		0.0, 1.0, camera_transition_duration
-	).set_ease(Tween.EASE_IN_OUT)
+	if camera_rig is OrbitCamera:
+		var tween := create_tween()
+		tween.tween_method(
+			func(t: float): (camera_rig as OrbitCamera).blend_to_target(target, t),
+			0.0, 1.0, camera_transition_duration
+		).set_ease(Tween.EASE_IN_OUT)
