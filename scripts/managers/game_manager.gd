@@ -6,18 +6,12 @@ enum GameState { MENU, PLAYING, PAUSED, GAME_OVER }
 var current_state := GameState.MENU
 
 var is_paused := false
-var enemies_killed := 0
-var total_damage_dealt := 0
-var total_damage_taken := 0
 
 func _ready() -> void:
 	start_game()
 
 func start_game() -> void:
 	current_state = GameState.PLAYING
-	enemies_killed = 0
-	total_damage_dealt = 0
-	total_damage_taken = 0
 	is_paused = false
 	
 	if has_node("/root/ScoreManager"):
