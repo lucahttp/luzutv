@@ -46,6 +46,10 @@ jobs:
             mv build/web/web.html build/web/index.html
           fi
 
+          # Add coi-serviceworker to handle Cross-Origin Isolation and SharedArrayBuffer for Godot 4 web exports
+          curl -sL https://raw.githubusercontent.com/gzuidhof/coi-serviceworker/master/coi-serviceworker.min.js > build/web/coi-serviceworker.min.js
+          sed -i 's|</head>|<script src="coi-serviceworker.min.js"></script></head>|g' build/web/index.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
