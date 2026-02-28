@@ -15,6 +15,9 @@ var footstep_interval_walk := 0.4
 var footstep_interval_run := 0.25
 var _footstep_timer := 0.0
 
+# Cache
+var _stream_cache: Dictionary = {}
+
 # Players
 var _sfx_players: Array[AudioStreamPlayer] = []
 var _music_player: AudioStreamPlayer
@@ -78,7 +81,7 @@ func play_death() -> void:
 func play_music(fade_time: float = 1.0) -> void:
 	if MUSIC_PATH.is_empty():
 		return
-	_music_player.stream = load(MUSIC_PATH)
+	_music_player.stream = _get_stream(MUSIC_PATH)
 	_music_player.volume_db = -80.0
 	_music_player.play()
 	var tween := create_tween()
@@ -96,10 +99,15 @@ func _play_random_sfx(sounds: Array, volume_db: float = 0.0) -> void:
 	if not player:
 		return
 	var path = sounds[0]
-	player.stream = load(path)
+	player.stream = _get_stream(path)
 	player.volume_db = volume_db
 	player.pitch_scale = randf_range(0.9, 1.1)
 	player.play()
+
+func _get_stream(path: String) -> AudioStream:
+	if not _stream_cache.has(path):
+		_stream_cache[path] = load(path)
+	return _stream_cache[path]
 
 func _get_free_player() -> AudioStreamPlayer:
 	for p in _sfx_players:
