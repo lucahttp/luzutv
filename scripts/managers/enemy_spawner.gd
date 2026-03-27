@@ -30,12 +30,6 @@ func _on_spawn_timer() -> void:
 	if current_enemies.size() >= max_enemies:
 		return
 	
-	# Limpiar enemigos muertos de la lista
-	current_enemies = current_enemies.filter(func(e): return is_instance_valid(e))
-	
-	if current_enemies.size() >= max_enemies:
-		return
-	
 	_spawn_enemy()
 
 func _spawn_enemy() -> void:
@@ -55,7 +49,7 @@ func _spawn_enemy() -> void:
 	var enemy = enemy_scene.instantiate()
 	# Poner al enemigo en posición correcta (y = 0 es el suelo)
 	enemy.global_position = Vector3(spawn_pos.x, 0, spawn_pos.z)
-	enemy.died.connect(_on_enemy_died)
+	enemy.tree_exiting.connect(_on_enemy_tree_exiting.bind(enemy))
 	
 	get_parent().add_child(enemy)
 	current_enemies.append(enemy)
@@ -82,9 +76,8 @@ func _get_random_spawn_position(player_pos: Vector3) -> Vector3:
 	# Si no encuentra buena posición, ponerlo lejos
 	return player_pos + Vector3(randf_range(-spawn_radius, spawn_radius), 0, randf_range(-spawn_radius, spawn_radius))
 
-func _on_enemy_died() -> void:
-	# La limpieza se hace en el siguiente timer
-	pass
+func _on_enemy_tree_exiting(enemy: Node) -> void:
+	current_enemies.erase(enemy)
 
 func clear_all_enemies() -> void:
 	for enemy in current_enemies:
