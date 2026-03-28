@@ -36,6 +36,7 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 var knockback_velocity := Vector3.ZERO
 var player_detected := false
 var last_known_position: Vector3 = Vector3.ZERO
+var _player_ref: Node3D = null
 
 ## Node references
 @onready var state_machine: StateMachine = $StateMachine
@@ -123,6 +124,15 @@ func _physics_process(delta: float) -> void:
 	# Actualizar detección de jugador
 	_update_awareness()
 
+func _get_player() -> Node3D:
+	if is_instance_valid(_player_ref):
+		return _player_ref
+	var player = get_tree().get_first_node_in_group("player")
+	if player is Node3D:
+		_player_ref = player
+		return player
+	return null
+
 ## Detección de visión mejorada
 func _update_awareness() -> void:
 	if target and is_instance_valid(target):
@@ -139,11 +149,12 @@ func _update_awareness() -> void:
 			# Nuevo avistamiento
 			if can_see_player() or can_hear_player():
 				player_detected = true
-				target = get_tree().get_first_node_in_group("player")
-				last_known_position = target.global_position
+				target = _get_player()
+				if target:
+					last_known_position = target.global_position
 
 func can_see_player() -> bool:
-	var player = get_tree().get_first_node_in_group("player")
+	var player = _get_player()
 	if not player:
 		return false
 	
@@ -172,7 +183,7 @@ func can_see_player() -> bool:
 	return true # Fallback si no hay ray
 
 func can_hear_player() -> bool:
-	var player = get_tree().get_first_node_in_group("player")
+	var player = _get_player()
 	if not player:
 		return false
 	
@@ -213,7 +224,7 @@ func is_target_in_range(range_distance: float) -> bool:
 
 ## Look for the player - VERSIÓN MEJORADA
 func find_player() -> Node3D:
-	var player := get_tree().get_first_node_in_group("player")
+	var player = _get_player()
 	if player:
 		if can_see_player() or can_hear_player():
 			player_detected = true
